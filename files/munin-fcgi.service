@@ -1,0 +1,20 @@
+[Unit]
+Description=Munin Graphs FCGI
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/munin/fcgi-graph.pid
+Restart=always
+
+ExecStartPre=/bin/mkdir -p /var/lib/munin/cgi-tmp/munin-cgi-graph
+ExecStartPre=/bin/chown www-data:munin /var/lib/munin/cgi-tmp/munin-cgi-graph
+
+ExecStart=/usr/bin/spawn-fcgi \
+  -s /var/run/munin/fcgi-graph.sock \
+  -P /var/run/munin/fcgi-graph.pid \
+  -U www-data -u www-data -g munin -M 0660 \
+  -- /usr/lib/munin/cgi/munin-cgi-graph
+
+[Install]
+WantedBy=multi-user.target

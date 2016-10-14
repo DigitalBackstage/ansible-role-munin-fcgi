@@ -1,0 +1,24 @@
+---
+- name: Install spawn-fcgi
+  apt:
+    name: "spawn-fcgi"
+
+- name: Copy systemd service
+  copy:
+    src: "munin-fcgi.service"
+    dest: "/etc/systemd/system/munin-fcgi.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  register: result
+  notify: "restart munin-fcgi"
+
+- name: Reload systemctl
+  command: "systemctl daemon-reload"
+  when: "result.changed"
+
+- name: Start munin-fcgi
+  service:
+    name: "munin-fcgi"
+    state: "started"
+    enabled: yes

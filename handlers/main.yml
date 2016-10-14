@@ -1,0 +1,5 @@
+---
+- name: "restart munin-fcgi"
+  service:
+    name: "munin-fcgi"
+    state: "restarted"
