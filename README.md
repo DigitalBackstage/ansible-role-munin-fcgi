@@ -20,7 +20,7 @@ Play:
   roles:
     - {role: "geerlingguy.munin"}
     - {role: "geerlingguy.nginx"}
-    - {role: "digitalbackstage.munin-fcgi"}
+    - {role: "DigitalBackstage.munin-fcgi"}
 ```
 
 Nginx configuration:
